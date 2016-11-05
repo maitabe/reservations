@@ -34,7 +34,7 @@ var claimReservation = function (nameInput) {
       }
       // remove color input when writing again
     $('input#name-txt').focus(function() {
-      alert('works');
+      // alert('works');
       // $('input#name-txt').removeClass('success');
       // $('input#name-txt').removeClass('warning');
       // $('input#name-txt').removeClass('error');
@@ -49,7 +49,7 @@ var claimReservation = function (nameInput) {
     var isAddUser = confirm('No reservation under ' + name + ' name. Do you want to add new user?');
     if (isAddUser === true) {
         // add user to obj
-        reservations[name] = {claimed:true};
+        reservations[nameInput] = {claimed:true};
         // alert('reservation completed. Enjoy it!!')
         $('#alert-message').append('<p>Reservation completed</p>');
     }
