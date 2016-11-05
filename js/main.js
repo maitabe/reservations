@@ -47,6 +47,7 @@ var claimReservation = function (nameInput) {
     }
    }
 
+//fade the alert message after 4 minutes
 setTimeout(function() {
     $('#alert-message').fadeOut('slow', function(){
         $('#alert-message').empty();
