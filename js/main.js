@@ -1,7 +1,7 @@
 // proto functions
 String.prototype.isEmpty = function() {
   return this.valueOf() === "";
-}
+};
 
 //global variables
 var reservations = {
@@ -10,6 +10,11 @@ var reservations = {
 };
 
 //functions
+var updateRsvList = function(nameInput) {
+
+  $('#reservations-list').append('<li> ' + nameInput + ' has reservation </li>');
+
+};
 
 //fade the alert message after 4 minutes
 var clearAlertMsg = function() {
@@ -19,15 +24,20 @@ var clearAlertMsg = function() {
         $('#alert-message').empty();
         //$('#alert-message').css('display', 'block');
         $('#alert-message').show();
+        $('#grab-val').attr("disabled", false);
+        $('input#name-txt').removeAttr('disabled');
     });
     $('input#name-txt').removeClass('success').removeClass('warning').removeClass('error');
-  }, 4000);
+  }, 3000);
 
-}
+};
 
 
 //claimReservation function for a Restaurant
 var claimReservation = function (nameInput) {
+
+  $('#grab-val').attr("disabled", true);
+  $('input#name-txt').attr('disabled','disabled');
 
   var userExist = false;
     // loop through the reservation obj
@@ -42,12 +52,12 @@ var claimReservation = function (nameInput) {
           // alert('welcome to the show');
           $('#alert-message').append('<p>' + nameInput  + ' reservation was found</p>');
           $('input#name-txt').addClass('success');
-          // $('#reservations-list').append('<li> ' + nameInput + ' has reservation </li>');
+          updateRsvList(nameInput);
         }else if(rsvp.claimed){
           // alert('your reservation was claimed already');
           $('#alert-message').append('<p>' + nameInput  + ' reservation was claimed already</p>');
           $('input#name-txt').addClass('warning');
-          // $('#reservations-list').append('<li> ' + nameInput + ' has reservation </li>');
+          updateRsvList(nameInput);
         }
       }
   }
@@ -62,7 +72,7 @@ var claimReservation = function (nameInput) {
         reservations[nameInput] = {claimed:true};
         // alert('reservation completed. Enjoy it!!')
         $('#alert-message').append('<p>Reservation for ' + nameInput  + ' completed</p>');
-        $('#reservations-list').append('<li> ' + nameInput + ' has reservation </li>');
+        updateRsvList(nameInput);
 
     }
    }
@@ -81,7 +91,6 @@ $(document).ready(function() {
   // handlers
   $('#grab-val').on('click', function() {
 
-
     // grab value from user input
     var name = $('#name-txt').val();
 
@@ -89,6 +98,7 @@ $(document).ready(function() {
       if(name.isEmpty()) {
         $('#alert-message').append('<p> Please enter a name! </p>');
          $('input#name-txt').addClass('error');
+         $('#grab-val').attr("disabled", true);
          clearAlertMsg();
          return false;
       }
@@ -124,12 +134,11 @@ $(document).ready(function() {
 
   });
 
-
 });
 
 
 //==================
-//to fix - if alert message still on an the input is clicked the alert message needs to disappear
+//to fix - if reservation was claimed already do not print twice
 
 
 
